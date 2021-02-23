@@ -20,11 +20,10 @@ public class CanvasCircle extends JPanel {
     public CanvasCircle() {
         this.affineTransform = new AffineTransform();
         this.circle = new Circle();
-        AffineTransform translate = new AffineTransform();
-        translate.setToTranslation(300,300);
-        Point2D transform = translate.transform(new Point2D.Double(circle.getX(), circle.getY()), null);
-        this.circle.setX(transform.getX());
-        this.circle.setY(transform.getY());
+        affineTransform.setToTranslation(300,300);
+        AffineTransform transform = new AffineTransform();
+        transform.rotate(v);
+        this.affineTransform.concatenate(transform);
     }
 
     @Override
@@ -32,15 +31,12 @@ public class CanvasCircle extends JPanel {
         Graphics2D graphics2D = (Graphics2D) g;
         graphics2D.drawArc((int)circle.getX(),(int)circle.getY(),20,20,0,360);
         System.out.println("重新绘图：x:"+this.circle.getX()+" y:"+this.circle.getY());
-//        this.repaint();
 
-        delta+=v;
-        this.affineTransform.rotate(delta);
-        Point2D transform = this.affineTransform.transform(new Point2D.Double(circle.getX(), circle.getY()), null);
-        System.out.println("转换后的点：x:"+transform.getX()+" y:"+transform.getY());
+        Point2D transform1 = this.affineTransform.transform(new Point2D.Double(circle.getX(), circle.getY()), null);
+        System.out.println("转换后的点：x:"+transform1.getX()+" y:"+transform1.getY());
 
-        this.circle.setX(transform.getX());
-        this.circle.setY(transform.getY());
+        this.circle.setX(transform1.getX());
+        this.circle.setY(transform1.getY());
 
         try {
             Thread.sleep(100);
