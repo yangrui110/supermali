@@ -1,26 +1,78 @@
 package com.supermali;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferStrategy;
 
 /**
  * @project super-mali
- * @Date 2021/2/22
+ * @Date 2021/2/24
  * @Auth yangrui
  **/
-public class FrameWork {
+public class FrameWork extends JFrame implements Runnable {
 
-    public void show(){
-        JFrame jFrame = new JFrame();
-        jFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        jFrame.setVisible(true);
-        jFrame.setSize(500,1000);
+    Canvas canvas ;
+    BufferStrategy bufferStrategy ;
+    Thread thread;
 
-//        JPanel jPanel = new JPanel();
-        CanvasCircle canvasCircle = new CanvasCircle();
-//        canvasCircle.rotate();
-//        jFrame.add(jPanel);
-        jFrame.add(canvasCircle);
+    private TestCircle testCircle;
 
+    private volatile boolean runningg = true;
+
+    public void init(){
+        this.testCircle = new TestCircle();
+        canvas = new Canvas();
+        canvas.setPreferredSize(new Dimension(500,800));
+        canvas.setIgnoreRepaint(true);
+        getContentPane().add(canvas);
+        setIgnoreRepaint(true);
+        setVisible(true);
+        pack();
+        canvas.createBufferStrategy(2);
+        bufferStrategy = canvas.getBufferStrategy();
+        thread = new Thread(this);
+        thread.start();
     }
 
+    @Override
+    public void run() {
+        while(runningg){
+            gameLoop();
+        }
+    }
+
+    public void closeApp(){
+        this.runningg = false;
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.exit(0);
+    }
+
+    public void gameLoop(){
+        long before = System.currentTimeMillis();
+        do{
+            do{
+                Graphics graphics=null;
+                try{
+                    graphics = bufferStrategy.getDrawGraphics();
+                    graphics.clearRect(0,0,getWidth(),getHeight());
+                    render(graphics);
+                    testCircle.drawCircle(graphics);
+                    long now = System.currentTimeMillis();
+                    graphics.drawString(""+(now-before),100,100);
+                    graphics.drawString("呵呵呵呵呵呵",200,100);
+                }finally {
+                    graphics.dispose();
+                }
+            }while (bufferStrategy.contentsRestored());
+            bufferStrategy.show();
+        } while (bufferStrategy.contentsLost());
+    }
+    // 绘制每一帧的图
+    public void render(Graphics graphics){
+
+    }
 }
