@@ -2,6 +2,7 @@ package com.supermali;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 
 /**
@@ -14,12 +15,14 @@ public class FrameWork extends JFrame implements Runnable {
     Canvas canvas ;
     BufferStrategy bufferStrategy ;
     Thread thread;
+    KeyListener keyListener;
 
     private TestCircle testCircle;
 
     private volatile boolean runningg = true;
 
     public void init(){
+        keyListener = new KeyEventSupport();
         this.testCircle = new TestCircle();
         canvas = new Canvas();
         canvas.setPreferredSize(new Dimension(500,800));
@@ -27,6 +30,7 @@ public class FrameWork extends JFrame implements Runnable {
         getContentPane().add(canvas);
         setIgnoreRepaint(true);
         setVisible(true);
+        addKeyListener(keyListener);
         pack();
         canvas.createBufferStrategy(2);
         bufferStrategy = canvas.getBufferStrategy();
@@ -62,8 +66,8 @@ public class FrameWork extends JFrame implements Runnable {
                     render(graphics);
                     testCircle.drawCircle(graphics);
                     long now = System.currentTimeMillis();
-                    graphics.drawString(""+(now-before),100,100);
-                    graphics.drawString("呵呵呵呵呵呵",200,100);
+//                    graphics.drawString(""+(now-before),100,100);
+//                    graphics.drawString("呵呵呵呵呵呵",200,100);
                 }finally {
                     graphics.dispose();
                 }

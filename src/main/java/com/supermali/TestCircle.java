@@ -1,9 +1,10 @@
 package com.supermali;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
+import java.math.BigDecimal;
 
 /**
  * @project super-mali
@@ -16,38 +17,55 @@ public class TestCircle {
 
     Point2D point2D ;
 
-    Point2D orign; // 将要移动到的原点
     public TestCircle() {
         this.theta = 0;
-        point2D = new Point2D.Double(0,0);
-        orign = new Point2D.Double(200,200);
+        point2D = new Point2D.Double(50,50);
     }
 
     public void drawCircle(Graphics graphics){
-        theta+= 0.001;
         // 1、构建平移和旋转
-        AffineTransform finalTrans = new AffineTransform();
-        finalTrans.setToIdentity();
+        AffineTransform worldAffineTransform = getWorldAffineTransform();
 
-        AffineTransform affineTransform = new AffineTransform();
-        affineTransform.translate(50,50);
-        Point2D d = new Point2D.Double();
-        finalTrans.concatenate(affineTransform);
-//        affineTransform.transform(this.point2D, d);
+        Point2D point2D = worldAffineTransform.transform(new Point2D.Double(0,0), null);
+        Point2D endPointX = worldAffineTransform.transform(new Point2D.Double(200,0), null);
+        Point2D endPointY = worldAffineTransform.transform(new Point2D.Double(0,200), null);
+        // 画出用户坐标系
+        int startX = (int) point2D.getX();
+        int startY = (int) point2D.getY();
+        double pointXX = endPointX.getX();
+        double pointYY = endPointY.getY();
+
+        graphics.drawLine(startX, startY,startX, (int) pointYY);
+        graphics.drawLine(startX,startY, (int) pointXX,startY);
+        graphics.drawString("y",startX, (int) pointYY);
+        graphics.drawString("x", (int) pointXX,startY);
+
         AffineTransform rotate = new AffineTransform();
-        rotate.setToIdentity();
+        if(KeyEventSupport.getPressed(KeyEvent.VK_RIGHT)!=0) {
+            theta+=0.01;
+        }
+        if(KeyEventSupport.getPressed(KeyEvent.VK_LEFT)!=0) {
+            theta-=0.01;
+        }
         rotate.rotate(theta);
-        finalTrans.concatenate(rotate);
-
-//        finalTrans.createTransformedShape(this.point2D);
-//        rotate.transform(d,d);
-
-        // 2、旋转
-
-//        System.out.println("d:x="+d.getX()+" y="+ d.getY());
+        // 获取用户坐标
+        Point2D userPos = rotate.transform(this.point2D, null);
+        // 转换成为世界坐标系
+        rotate.preConcatenate(worldAffineTransform);
+        Point2D d = rotate.transform(this.point2D, null);
+        graphics.drawString("用户坐标x: "+userPos.getX()+" 用户坐标Y: "+userPos.getY(),0,20);
+        graphics.drawString("世界坐标x: "+d.getX()+" 世界坐标Y: "+d.getY(),0,40);
         graphics.drawArc((int)d.getX(),(int)d.getY(),10,10,0,360);
     }
 
-    // 自定义坐标系，转换
-
+    public AffineTransform getWorldAffineTransform(){
+        // 先翻转
+        AffineTransform worldTransform = new AffineTransform();
+        worldTransform.scale(1,-1);
+        // 再平移
+        AffineTransform transform = new AffineTransform();
+        transform.translate(200,400);
+        worldTransform.preConcatenate(transform);
+        return worldTransform;
+    }
 }
