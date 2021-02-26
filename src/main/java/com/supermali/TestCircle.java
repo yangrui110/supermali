@@ -14,12 +14,22 @@ import java.math.BigDecimal;
 public class TestCircle {
 
     private double theta;
+    double t= 0.007; // 时间
+    double k = Math.PI/500;
 
     Point2D point2D ;
+
+    private int state =1;
 
     public TestCircle() {
         this.theta = 0;
         point2D = new Point2D.Double(50,50);
+    }
+
+    public void reset(){
+        this.theta = 0;
+        point2D = new Point2D.Double(50,50);
+        this.state = 1;
     }
 
     public void drawCircle(Graphics graphics){
@@ -41,19 +51,32 @@ public class TestCircle {
         graphics.drawString("x", (int) pointXX,startY);
 
         AffineTransform rotate = new AffineTransform();
-        if(KeyEventSupport.getPressed(KeyEvent.VK_RIGHT)!=0) {
-            theta+=0.01;
+        rotate.isIdentity();
+        if(state==1){
+            this.theta +=t;
+            boolean line = paowuLine();
+            if(!line){
+                state = 0;
+            }
+        }else {
+//        Point2D line = new Point2D.Double(0,0);
+            if (KeyEventSupport.getPressed(KeyEvent.VK_RIGHT) != 0) {
+                this.theta += t;
+                this.state = 1;
+                paowuLine();
+            }
+            if (KeyEventSupport.getPressed(KeyEvent.VK_LEFT) != 0) {
+                reset();
+            }
         }
-        if(KeyEventSupport.getPressed(KeyEvent.VK_LEFT)!=0) {
-            theta-=0.01;
-        }
-        rotate.rotate(theta);
+//        rotate.rotate(theta);
+//        line.setLocation(this.point2D.getX()+line.getX(),this.point2D.getY()+line.getY());
         // 获取用户坐标
         Point2D userPos = rotate.transform(this.point2D, null);
         // 转换成为世界坐标系
         rotate.preConcatenate(worldAffineTransform);
         Point2D d = rotate.transform(this.point2D, null);
-        graphics.drawString("用户坐标x: "+userPos.getX()+" 用户坐标Y: "+userPos.getY(),0,20);
+        graphics.drawString("用户坐标x: "+userPos.getX()+" 用户坐标Y: "+userPos.getY()+" 时间："+theta,0,20);
         graphics.drawString("世界坐标x: "+d.getX()+" 世界坐标Y: "+d.getY(),0,40);
         graphics.drawArc((int)d.getX(),(int)d.getY(),10,10,0,360);
     }
@@ -67,5 +90,22 @@ public class TestCircle {
         transform.translate(200,400);
         worldTransform.preConcatenate(transform);
         return worldTransform;
+    }
+    // 走抛物线
+    public boolean paowuLine(){
+        double v = 60; // 速度
+        int g = 10;
+        double dy = v*t - g*t*theta;
+        double dv = v-g*theta;// 第theta时刻的速度
+        double dx = 10*t;
+//        double dy = Math.sin(this.theta) * 200;
+//        return new Point2D.Double(dx,dy);
+        double v1 = this.point2D.getX() + dx;
+        double v2 = this.point2D.getY() + dy;
+        if(v2< 0){
+            return false;
+        }
+        this.point2D.setLocation(new Point2D.Double(v1,v2));
+        return true;
     }
 }
