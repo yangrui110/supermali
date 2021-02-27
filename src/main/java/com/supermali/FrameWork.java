@@ -1,5 +1,8 @@
 package com.supermali;
 
+import com.supermali.creater.GameStarter;
+import com.supermali.util.FrameRate;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
@@ -16,16 +19,19 @@ public class FrameWork extends JFrame implements Runnable {
     BufferStrategy bufferStrategy ;
     Thread thread;
     KeyListener keyListener;
-
-    private TestCircle testCircle;
+    FrameRate frameRate;
+    GameStarter gameStarter;
 
     private volatile boolean runningg = true;
 
     public void init(){
+        frameRate = new FrameRate();
+        frameRate.init();
+        gameStarter = new GameStarter();
+
         keyListener = new KeyEventSupport();
-        this.testCircle = new TestCircle();
         canvas = new Canvas();
-        canvas.setPreferredSize(new Dimension(500,800));
+        canvas.setPreferredSize(new Dimension(1000,800));
         canvas.setIgnoreRepaint(true);
         getContentPane().add(canvas);
         setIgnoreRepaint(true);
@@ -56,7 +62,6 @@ public class FrameWork extends JFrame implements Runnable {
     }
 
     public void gameLoop(){
-        long before = System.currentTimeMillis();
         do{
             do{
                 Graphics graphics=null;
@@ -64,10 +69,6 @@ public class FrameWork extends JFrame implements Runnable {
                     graphics = bufferStrategy.getDrawGraphics();
                     graphics.clearRect(0,0,getWidth(),getHeight());
                     render(graphics);
-                    testCircle.drawCircle(graphics);
-                    long now = System.currentTimeMillis();
-//                    graphics.drawString(""+(now-before),100,100);
-//                    graphics.drawString("呵呵呵呵呵呵",200,100);
                 }finally {
                     graphics.dispose();
                 }
@@ -77,6 +78,8 @@ public class FrameWork extends JFrame implements Runnable {
     }
     // 绘制每一帧的图
     public void render(Graphics graphics){
-
+        frameRate.calculate();
+        gameStarter.show(graphics);
+        frameRate.render(graphics);
     }
 }
