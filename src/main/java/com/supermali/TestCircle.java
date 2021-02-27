@@ -50,6 +50,7 @@ public class TestCircle {
         graphics.drawString("y",startX, (int) pointYY);
         graphics.drawString("x", (int) pointXX,startY);
 
+        // 1
         AffineTransform rotate = new AffineTransform();
         rotate.isIdentity();
         if(state==1){
