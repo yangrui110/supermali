@@ -33,15 +33,14 @@ public abstract class MapImageAbstract {
     private AffineTransform worldAffineTransform;
 
     public MapImageAbstract() {
-        this.init();
-        this.worldAffineTransform = WorldTransform.getWorldAffineTransform();
+        this.config();
+
     }
 
     public MapImageAbstract(int x, int y) {
         this.x = x;
         this.y = y;
-        this.init();
-        this.worldAffineTransform = WorldTransform.getWorldAffineTransform();
+        this.config();
     }
 
     /**
@@ -56,8 +55,14 @@ public abstract class MapImageAbstract {
 
     }
 
+    /**
+     * 子类复写的方法
+     * */
     public abstract void init();
 
+    /**
+     * 加载图片
+     * */
     public void loadImg(String path){
         try {
             InputStream inputStream = this.getClass().getResourceAsStream(path);
@@ -69,6 +74,43 @@ public abstract class MapImageAbstract {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 加载路径
+     * */
+    public byte[] getImageBytes(String path){
+        try {
+            InputStream inputStream = this.getClass().getResourceAsStream(path);
+            byte[] bytes = FileUtil.readFileToByte(inputStream);
+            return bytes;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 生成shape，默认生成矩形
+     * */
+    public void createShape(){
+        Rectangle rectangle = new Rectangle();
+        rectangle.x =this.x;
+        rectangle.y=this.y;
+        rectangle.width = bufferedImage.getWidth();
+        rectangle.height=bufferedImage.getHeight();
+        this.shape = rectangle;
+    }
+
+    /**
+     * 配置
+     * */
+    public void config(){
+        this.init();
+        this.createShape();
+        this.worldAffineTransform = WorldTransform.getWorldAffineTransform();
     }
 
     public int getX() {
@@ -109,5 +151,13 @@ public abstract class MapImageAbstract {
 
     public void setBufferedImage(BufferedImage bufferedImage) {
         this.bufferedImage = bufferedImage;
+    }
+
+    public AffineTransform getWorldAffineTransform() {
+        return worldAffineTransform;
+    }
+
+    public void setWorldAffineTransform(AffineTransform worldAffineTransform) {
+        this.worldAffineTransform = worldAffineTransform;
     }
 }

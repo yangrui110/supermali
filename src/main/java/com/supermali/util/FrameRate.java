@@ -42,4 +42,7 @@ public class FrameRate {
         graphics.drawString(rateString,10,40);
     }
 
+    public long getDelta() {
+        return delta;
+    }
 }

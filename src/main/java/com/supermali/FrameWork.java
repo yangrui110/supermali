@@ -36,6 +36,7 @@ public class FrameWork extends JFrame implements Runnable {
         getContentPane().add(canvas);
         setIgnoreRepaint(true);
         setVisible(true);
+        requestFocus();
         addKeyListener(keyListener);
         pack();
         canvas.createBufferStrategy(2);
@@ -79,6 +80,7 @@ public class FrameWork extends JFrame implements Runnable {
     // 绘制每一帧的图
     public void render(Graphics graphics){
         frameRate.calculate();
+        gameStarter.proccessKey(frameRate.getDelta()); // 处理按键输入
         gameStarter.show(graphics);
         frameRate.render(graphics);
     }
