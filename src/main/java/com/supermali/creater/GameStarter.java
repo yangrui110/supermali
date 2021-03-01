@@ -49,6 +49,8 @@ public class GameStarter {
             if(x>500){
                 creater.moveForworld();
             }
+        }else if(KeyEventSupport.getPressed(KeyEvent.VK_LEFT)!=0){
+            select.getGobackBehavior().goback(delta);
         }else {
             select.getTerminateBehavior().terminate();
         }

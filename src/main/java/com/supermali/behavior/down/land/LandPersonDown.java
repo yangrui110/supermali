@@ -43,7 +43,11 @@ public class LandPersonDown extends DownBehavior {
             isOver = true;
             totalTime = 0;
         }
-        ImgHelper imgHelper = ImgLoader.getImgHelper(ImgKey.Land.TERMINATE);
+        Enum key = ImgKey.Land.TERMINATE_RIGHT;
+        if(person.isLeft()){
+            key = ImgKey.Land.TERMINATE_LEFT;
+        }
+        ImgHelper imgHelper = ImgLoader.getImgHelper(key);
         BufferedImage bufferedImage = imgHelper.select(0);
         person.setBufferedImage(bufferedImage);
     }

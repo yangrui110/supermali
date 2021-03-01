@@ -4,7 +4,7 @@ import com.supermali.behavior.goback.GobackBehavior;
 
 public class MapFactorGoBack extends GobackBehavior {
     @Override
-    public void goback() {
+    public void goback(long delta) {
 
     }
 }

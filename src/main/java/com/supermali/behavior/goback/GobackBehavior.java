@@ -1,5 +1,5 @@
 package com.supermali.behavior.goback;
 
 public abstract class GobackBehavior {
-    public abstract void goback();
+    public abstract void goback(long delta);
 }

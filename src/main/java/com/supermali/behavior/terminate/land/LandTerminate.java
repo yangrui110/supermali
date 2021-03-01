@@ -1,7 +1,6 @@
 package com.supermali.behavior.terminate.land;
 
-import com.supermali.behavior.down.DownBehavior;
-import com.supermali.behavior.jump.JumpBehavior;
+import com.supermali.behavior.Gravity;
 import com.supermali.behavior.terminate.TerminateBehavior;
 import com.supermali.creater.img.ImgHelper;
 import com.supermali.creater.img.ImgKey;
@@ -25,27 +24,16 @@ public class LandTerminate extends TerminateBehavior {
 
     @Override
     public void terminate() {
-        ImgHelper imgHelper = ImgLoader.getImgHelper(ImgKey.Land.TERMINATE);
+        Enum key = ImgKey.Land.TERMINATE_RIGHT;
+        if(person.isLeft()){
+            key = ImgKey.Land.TERMINATE_LEFT;
+        }
+        ImgHelper imgHelper = ImgLoader.getImgHelper(key);
         BufferedImage select = imgHelper.select(0);
         person.setBufferedImage(select);
 
         // 默认检测是否有支撑
-        JumpBehavior jumpBehavior = person.getJumpBehavior();
-        DownBehavior downBehavior = person.getDownBehavior();
-        // 还在跳跃过程,继续跳跃
-        if(!jumpBehavior.isOver()){
-            jumpBehavior.jump();
-        }
-        // 还在下降过程，继续下降
-        else if(!downBehavior.isOver()){
-            downBehavior.down();
-        }else {
-            // 判断是否有支撑物
-            boolean collide = person.checkCollide();
-            if(!collide){
-                downBehavior.down();
-            }
-        }
+        Gravity.ensureFactorInFloor(person);
 
     }
 }

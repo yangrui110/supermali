@@ -39,7 +39,11 @@ public class LandPersonJump extends JumpBehavior {
             isOver = true;
             theta = 0;
         }
-        ImgHelper imgHelper = ImgLoader.getImgHelper(ImgKey.Land.JUMP);
+        Enum key = ImgKey.Land.JUMP_RIGHT;
+        if(person.isLeft()){
+            key = ImgKey.Land.JUMP_LEFT;
+        }
+        ImgHelper imgHelper = ImgLoader.getImgHelper(key);
         BufferedImage bufferedImage = imgHelper.select(0);
         person.setBufferedImage(bufferedImage);
     }

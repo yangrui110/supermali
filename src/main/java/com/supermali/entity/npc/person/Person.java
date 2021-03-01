@@ -16,10 +16,7 @@ import com.supermali.creater.img.ImgLoader;
 import com.supermali.entity.MapImageAbstract;
 import com.supermali.entity.npc.NPCAbstract;
 
-import java.awt.Graphics;
-import java.awt.Shape;
-import java.awt.Rectangle;
-
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +41,12 @@ public class Person extends NPCAbstract {
     // 静止行为
     TerminateBehavior terminateBehavior;
 
+    private Direct direct;
+
+    public enum Direct{
+        Left,Right
+    }
+
     public Person() {
         super();
     }
@@ -57,7 +60,6 @@ public class Person extends NPCAbstract {
         super.make(g);
         g.drawString("用户坐标：x="+this.getX()+" y="+this.getY(),70,30);
     }
-
 
     @Override
     public boolean checkCollide() {
@@ -93,6 +95,14 @@ public class Person extends NPCAbstract {
         return false;
     }
 
+    public boolean isLeft() {
+        return direct==Direct.Left;
+    }
+
+    public void setDirect(Direct direct) {
+        this.direct = direct;
+    }
+
     @Override
     public void init() {
         hinders = new ArrayList<>();
@@ -101,8 +111,9 @@ public class Person extends NPCAbstract {
         jumpBehavior = new LandPersonJump(this);
         downBehavior = new LandPersonDown(this);
         terminateBehavior = new LandTerminate(this);
+        this.direct = Direct.Right;
 
-        ImgHelper imgHelper = ImgLoader.getImgHelper(ImgKey.Land.TERMINATE);
+        ImgHelper imgHelper = ImgLoader.getImgHelper(ImgKey.Land.TERMINATE_RIGHT);
         BufferedImage select = imgHelper.select(0);
         this.setBufferedImage(select);
 

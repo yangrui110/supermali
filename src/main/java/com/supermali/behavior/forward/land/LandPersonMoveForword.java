@@ -1,8 +1,7 @@
 package com.supermali.behavior.forward.land;
 
-import com.supermali.behavior.down.DownBehavior;
+import com.supermali.behavior.Gravity;
 import com.supermali.behavior.forward.MoveForwordBehavior;
-import com.supermali.behavior.jump.JumpBehavior;
 import com.supermali.creater.img.ImgHelper;
 import com.supermali.creater.img.ImgKey;
 import com.supermali.creater.img.ImgLoader;
@@ -26,6 +25,7 @@ public class LandPersonMoveForword extends MoveForwordBehavior {
     @Override
     public void forward(long delta) {
 
+        person.setDirect(Person.Direct.Right);
         // 前进
         double x = person.getX();
         if(x <500){
@@ -45,15 +45,6 @@ public class LandPersonMoveForword extends MoveForwordBehavior {
             BufferedImage select = imgHelper.select(index);
             person.setBufferedImage(select);
         }
-        JumpBehavior jumpBehavior = person.getJumpBehavior();
-        DownBehavior downBehavior = person.getDownBehavior();
-        // 还在跳跃过程,继续跳跃
-        if(!jumpBehavior.isOver()){
-            jumpBehavior.jump();
-        }
-        // 还在下降过程，继续下降
-        if(!downBehavior.isOver()){
-            downBehavior.down();
-        }
+        Gravity.ensureFactorInFloor(person);
     }
 }
