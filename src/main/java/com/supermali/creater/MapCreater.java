@@ -51,7 +51,7 @@ public class MapCreater {
     public void createBackground(){
         // 蓝色天空
         ArrayList<Sky> list = new ArrayList<>();
-        for(int i=0;i<50;i++){
+        for(int i=0;i<60;i++){
             for(int j=0;j<40;j++){
                 Sky sky = new Sky(i*16,j*16);
                 list.add(sky);
@@ -60,7 +60,7 @@ public class MapCreater {
         this.blueSkys = list;
         // 地板
         List<Floor> floorList = new ArrayList<>();
-        for(int i=0;i<50;i++ ){
+        for(int i=0;i<60;i++ ){
             for(int j=0;j<2;j++){
                 Floor floor = new Floor(i*16,j*16);
                 floorList.add(floor);
@@ -69,7 +69,7 @@ public class MapCreater {
         this.floor = floorList;
         // 地下
         ArrayList<FloorDown> floorDowns = new ArrayList<>();
-        for(int i=0;i<50;i++ ){
+        for(int i=0;i<60;i++ ){
             for(int j=0;j<40;j++){
                 FloorDown floorDown = new FloorDown(i*16,-j*16);
                 floorDowns.add(floorDown);
