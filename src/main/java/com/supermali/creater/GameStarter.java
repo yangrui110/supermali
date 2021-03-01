@@ -1,8 +1,10 @@
 package com.supermali.creater;
 
 import com.supermali.KeyEventSupport;
+import com.supermali.behavior.down.DownBehavior;
+import com.supermali.behavior.jump.JumpBehavior;
 import com.supermali.entity.MapImageAbstract;
-import com.supermali.entity.npc.person.PersonAbstract;
+import com.supermali.entity.npc.person.Person;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -30,22 +32,23 @@ public class GameStarter {
 
     public void show(Graphics graphics){
         creater.show(graphics);
-        PersonAbstract select = personHelper.select();
+        Person select = personHelper.select();
         select.make(graphics);
     }
     // 处理键盘事件
     public void proccessKey(long delta){
-        PersonAbstract select = personHelper.select();
+        Person select = personHelper.select();
+
         if(KeyEventSupport.getPressed(KeyEvent.VK_UP)!=0){
-            select.jump();
+            select.getJumpBehavior().jump();
         } else if(KeyEventSupport.getPressed(KeyEvent.VK_RIGHT)!=0){
-            select.moveForward(delta);
+            select.getForwordBehavior().forward(delta);
             double x = select.getX();
             if(x>500){
                 creater.moveForworld();
             }
         }else {
-            select.terminateMove();
+            select.getTerminateBehavior().terminate();
         }
         List<? extends MapImageAbstract> hinderMap = creater.getHinderMap();
         select.setHinders(hinderMap);

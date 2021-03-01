@@ -1,9 +1,10 @@
 package com.supermali.entity.map.background;
 
-import javax.imageio.ImageIO;
+import com.supermali.creater.img.ImgHelper;
+import com.supermali.creater.img.ImgKey;
+import com.supermali.creater.img.ImgLoader;
+
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 
 /**
  * @project super-mali
@@ -11,11 +12,8 @@ import java.io.IOException;
  * @Auth yangrui
  **/
 public class Sky extends BackGroundMapAbstract {
-
-    private static BufferedImage imageSky;
-    private static byte[] imageBys;
-
     public Sky() {
+        super();
     }
 
     public Sky(int x, int y) {
@@ -25,21 +23,8 @@ public class Sky extends BackGroundMapAbstract {
     // 初始化，设置图片属性
     @Override
     public void init() {
-        // 加载图片
-        if(imageSky!=null){
-            setBufferedImage(imageSky);
-            setImage(imageBys);
-        }else {
-            byte[] imageBytes = this.getImageBytes("/img/map/background/sky.png");
-            setImage(imageBytes);
-            try {
-                BufferedImage read = ImageIO.read(new ByteArrayInputStream(imageBytes));
-                setBufferedImage(read);
-                imageSky = read;
-                imageBys = imageBytes;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        ImgHelper imgHelper = ImgLoader.getImgHelper(ImgKey.Land.SKY);
+        BufferedImage select = imgHelper.select(0);
+        this.setBufferedImage(select);
     }
 }

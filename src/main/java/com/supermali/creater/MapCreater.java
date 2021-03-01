@@ -1,5 +1,6 @@
 package com.supermali.creater;
 
+import com.supermali.creater.img.ImgLoader;
 import com.supermali.entity.MapImageAbstract;
 import com.supermali.entity.map.background.BackGroundMapAbstract;
 import com.supermali.entity.map.background.FloorDown;
@@ -7,7 +8,6 @@ import com.supermali.entity.map.background.Sky;
 import com.supermali.entity.map.hinder.Floor;
 import com.supermali.entity.map.hinder.HinderMapAbstract;
 import com.supermali.entity.map.hinder.Question;
-import com.supermali.entity.npc.NPCAbstract;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -33,9 +33,16 @@ public class MapCreater {
     // 绝对地址
     private double absoluteWidth;
 
+    ImgLoader imgLoader;
+
     public MapCreater() {
-        createBackground();
+
         absoluteWidth = 0;
+        // 加载地图元素的图片
+        imgLoader = new ImgLoader();
+        imgLoader.loadMapFactor();
+        // 图片加载完成后，初始化背景
+        createBackground();
     }
 
     /**
@@ -99,13 +106,6 @@ public class MapCreater {
         List<MapImageAbstract> floorList = floor.stream().collect(Collectors.toList());
         floorList.addAll(questions);
         return floorList;
-    }
-
-    /**
-     * 加载地图元素图片
-     * */
-    public void loadMapFactory(){
-        // 加载
     }
 
 }

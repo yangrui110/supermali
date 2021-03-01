@@ -1,9 +1,10 @@
 package com.supermali.entity.map.background;
 
-import javax.imageio.ImageIO;
+import com.supermali.creater.img.ImgHelper;
+import com.supermali.creater.img.ImgKey;
+import com.supermali.creater.img.ImgLoader;
+
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 
 /**
  * @project super-mali
@@ -11,8 +12,6 @@ import java.io.IOException;
  * @Auth yangrui
  **/
 public class FloorDown extends BackGroundMapAbstract {
-    private static BufferedImage imageSky;
-    private static byte[] imageBys;
 
     public FloorDown() {
     }
@@ -23,21 +22,8 @@ public class FloorDown extends BackGroundMapAbstract {
 
     @Override
     public void init() {
-        // 加载图片
-        if(imageSky!=null){
-            setBufferedImage(imageSky);
-            setImage(imageBys);
-        }else {
-            byte[] imageBytes = this.getImageBytes("/img/map/background/floorDown.png");
-            setImage(imageBytes);
-            try {
-                BufferedImage read = ImageIO.read(new ByteArrayInputStream(imageBytes));
-                setBufferedImage(read);
-                imageSky = read;
-                imageBys = imageBytes;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        ImgHelper imgHelper = ImgLoader.getImgHelper(ImgKey.Land.FLOOR_DOWN);
+        BufferedImage select = imgHelper.select(0);
+        this.setBufferedImage(select);
     }
 }

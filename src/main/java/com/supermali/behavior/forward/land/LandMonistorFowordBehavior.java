@@ -4,7 +4,7 @@ import com.supermali.behavior.forward.MoveForwordBehavior;
 
 public class LandMonistorFowordBehavior extends MoveForwordBehavior {
     @Override
-    public void forward() {
+    public void forward(long delta) {
 
     }
 }

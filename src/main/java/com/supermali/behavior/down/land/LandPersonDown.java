@@ -2,7 +2,12 @@ package com.supermali.behavior.down.land;
 
 import com.supermali.behavior.Gravity;
 import com.supermali.behavior.down.DownBehavior;
+import com.supermali.creater.img.ImgHelper;
+import com.supermali.creater.img.ImgKey;
+import com.supermali.creater.img.ImgLoader;
 import com.supermali.entity.npc.person.Person;
+
+import java.awt.image.BufferedImage;
 
 public class LandPersonDown extends DownBehavior {
 
@@ -12,7 +17,7 @@ public class LandPersonDown extends DownBehavior {
     // 重力: 控制下落速度
     private Gravity gravity;
     // 重力下落总时间
-    private long totalTime;
+    private double totalTime;
 
     public LandPersonDown(Person person) {
         this.person = person;
@@ -26,18 +31,26 @@ public class LandPersonDown extends DownBehavior {
      * */
     @Override
     public void down() {
-        if(!isOver){
-            totalTime+=Gravity.t;
-            double y = this.person.getY();
-            double dy = -0.5*Gravity.g*Gravity.t*totalTime;
-            y=y+dy;
-            person.setY(y);
-            // 检测是否具有碰撞
-            boolean collide = person.checkCollide();
-            if(collide){
-                isOver = true;
-                totalTime = 0;
-            }
+        isOver= false;
+        totalTime+=Gravity.t;
+        double y = this.person.getY();
+        double dy = -0.5*Gravity.g*Gravity.t*totalTime;
+        y=y+dy;
+        person.setY(y);
+        // 检测是否具有碰撞
+        boolean collide = person.checkCollide();
+        if(collide){
+            isOver = true;
+            totalTime = 0;
         }
+        System.out.println(totalTime);
+        ImgHelper imgHelper = ImgLoader.getImgHelper(ImgKey.Land.TERMINATE);
+        BufferedImage bufferedImage = imgHelper.select(0);
+        person.setBufferedImage(bufferedImage);
+    }
+
+    @Override
+    public boolean isOver() {
+        return isOver;
     }
 }

@@ -1,7 +1,6 @@
 package com.supermali.creater;
 
 import com.supermali.entity.npc.person.Person;
-import com.supermali.entity.npc.person.PersonAbstract;
 
 /**
  * @project super-mali
@@ -11,8 +10,8 @@ import com.supermali.entity.npc.person.PersonAbstract;
  **/
 public class PersonHelper {
 
-    PersonAbstract first;
-    PersonAbstract two;
+    Person first;
+    Person two;
     private int type;
 
     public PersonHelper() {
@@ -21,7 +20,7 @@ public class PersonHelper {
         type =0;
     }
 
-    public PersonAbstract select(){
+    public Person select(){
         if(type ==0) return first;
         else return two;
     }

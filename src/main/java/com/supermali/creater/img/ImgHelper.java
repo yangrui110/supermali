@@ -1,13 +1,11 @@
 package com.supermali.creater.img;
 
-import lombok.Data;
-
 import java.awt.image.BufferedImage;
 
 /**
  * 图片帮助类
  * */
-@Data
+//@Data
 public class ImgHelper {
 
     BufferedImage[] bufferedImage;
@@ -24,4 +22,19 @@ public class ImgHelper {
         return bufferedImage[i1];
     }
 
+    public BufferedImage[] getBufferedImage() {
+        return bufferedImage;
+    }
+
+    public void setBufferedImage(BufferedImage[] bufferedImage) {
+        this.bufferedImage = bufferedImage;
+    }
+
+    public byte[][] getBytes() {
+        return bytes;
+    }
+
+    public void setBytes(byte[][] bytes) {
+        this.bytes = bytes;
+    }
 }

@@ -1,15 +1,11 @@
 package com.supermali.entity;
 
-import com.supermali.util.FileUtil;
 import com.supermali.util.WorldTransform;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * @project super-mali
@@ -59,39 +55,10 @@ public abstract class MapImageAbstract {
     public abstract void init();
 
     /**
-     * 加载路径
-     * */
-    public byte[] getImageBytes(String path){
-        try {
-            InputStream inputStream = this.getClass().getResourceAsStream(path);
-            byte[] bytes = FileUtil.readFileToByte(inputStream);
-            return bytes;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * 生成shape，默认生成矩形
-     * */
-    public void createShape(){
-        Rectangle rectangle = new Rectangle();
-        rectangle.x =(int)this.x;
-        rectangle.y=(int)this.y;
-        rectangle.width = bufferedImage.getWidth();
-        rectangle.height=bufferedImage.getHeight();
-        this.shape = rectangle;
-    }
-
-    /**
      * 配置
      * */
     public void config(){
         this.init();
-        this.createShape();
         this.worldAffineTransform = WorldTransform.getWorldAffineTransform();
     }
 
