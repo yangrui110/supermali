@@ -1,11 +1,14 @@
 package com.supermali;
 
 import com.supermali.creater.GameStarter;
+import com.supermali.listener.KeyEventSupport;
+import com.supermali.listener.MouseSupport;
 import com.supermali.util.FrameRate;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 
 /**
@@ -19,6 +22,7 @@ public class FrameWork extends JFrame implements Runnable {
     BufferStrategy bufferStrategy ;
     Thread thread;
     KeyListener keyListener;
+    MouseListener mouseListener;
     FrameRate frameRate;
     GameStarter gameStarter;
 
@@ -28,16 +32,21 @@ public class FrameWork extends JFrame implements Runnable {
         frameRate = new FrameRate();
         frameRate.init();
         gameStarter = new GameStarter();
+        gameStarter.setFrame(this);
 
         keyListener = new KeyEventSupport();
+        mouseListener = new MouseSupport();
         canvas = new Canvas();
         canvas.setPreferredSize(new Dimension(1000,800));
         canvas.setIgnoreRepaint(true);
+        canvas.addMouseListener(mouseListener);
         getContentPane().add(canvas);
         setIgnoreRepaint(true);
         setVisible(true);
         requestFocus();
         addKeyListener(keyListener);
+
+        setResizable(false);
         pack();
         canvas.createBufferStrategy(2);
         bufferStrategy = canvas.getBufferStrategy();
@@ -81,6 +90,7 @@ public class FrameWork extends JFrame implements Runnable {
     public void render(Graphics graphics){
         frameRate.calculate();
         gameStarter.proccessKey(frameRate.getDelta()); // 处理按键输入
+        gameStarter.proccessMouse();
         gameStarter.show(graphics);
         frameRate.render(graphics);
     }

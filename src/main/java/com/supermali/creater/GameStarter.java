@@ -1,11 +1,11 @@
 package com.supermali.creater;
 
-import com.supermali.KeyEventSupport;
-import com.supermali.behavior.down.DownBehavior;
-import com.supermali.behavior.jump.JumpBehavior;
 import com.supermali.entity.MapImageAbstract;
 import com.supermali.entity.npc.person.Person;
+import com.supermali.listener.KeyEventSupport;
+import com.supermali.listener.MouseSupport;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -20,6 +20,8 @@ public class GameStarter {
     private MapCreater creater;
 
     private PersonHelper personHelper;
+
+    private JFrame frame ;
 
     public GameStarter() {
         this.init();
@@ -52,5 +54,16 @@ public class GameStarter {
         }
         List<? extends MapImageAbstract> hinderMap = creater.getHinderMap();
         select.setHinders(hinderMap);
+    }
+
+    public void setFrame(JFrame frame) {
+        this.frame = frame;
+    }
+
+    public void proccessMouse(){
+        if(MouseSupport.isMouseClick()){
+            MouseSupport.setMouseClick(false);
+            frame.requestFocus();
+        }
     }
 }

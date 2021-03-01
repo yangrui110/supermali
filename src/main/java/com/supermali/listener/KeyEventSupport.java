@@ -1,4 +1,4 @@
-package com.supermali;
+package com.supermali.listener;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
