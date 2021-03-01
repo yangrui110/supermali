@@ -101,4 +101,11 @@ public class MapCreater {
         return floorList;
     }
 
+    /**
+     * 加载地图元素图片
+     * */
+    public void loadMapFactory(){
+        // 加载
+    }
+
 }

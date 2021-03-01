@@ -87,10 +87,10 @@ public class Person extends PersonAbstract {
 
 
     @Override
-    public boolean checkCollide(List<? extends MapImageAbstract> npcAbstractList) {
+    public boolean checkCollide() {
         Shape shape = this.getShape();
         Rectangle rectangle = (Rectangle) shape;
-        for(MapImageAbstract npcAbstract: npcAbstractList){
+        for(MapImageAbstract npcAbstract: getHinders()){
             double npcAbstractX = npcAbstract.getX();
             double npcAbstractY = npcAbstract.getY();
             if(npcAbstract.getShape().intersects(rectangle)){
