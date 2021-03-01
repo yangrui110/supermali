@@ -2,6 +2,8 @@ package com.supermali.entity.npc;
 
 import com.supermali.entity.MapImageAbstract;
 
+import java.util.List;
+
 /**
  * @project super-mali
  * @Date 2021/2/28
@@ -21,7 +23,7 @@ public abstract class NPCAbstract extends MapImageAbstract {
     /**
      * 检测碰撞
      * */
-    public abstract void checkCollide();
+    public abstract boolean checkCollide(List<? extends MapImageAbstract> npcAbstractList);
     /**
      * 切换状态
      * */

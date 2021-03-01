@@ -1,9 +1,11 @@
 package com.supermali.entity.npc.person;
 
+import com.supermali.entity.MapImageAbstract;
 import com.supermali.entity.npc.NPCAbstract;
 import lombok.Data;
 
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 /**
  * @project super-mali
@@ -32,7 +34,7 @@ public abstract class PersonAbstract extends NPCAbstract {
         state = PersonState.SMALL;
         lifes = 3;
     }
-
+    private List<? extends MapImageAbstract> hinders;
     // 人物名称
     private String name;
     // 人物血量

@@ -1,10 +1,12 @@
 package com.supermali.creater;
 
 import com.supermali.KeyEventSupport;
+import com.supermali.entity.MapImageAbstract;
 import com.supermali.entity.npc.person.PersonAbstract;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 /**
  * @project super-mali
@@ -38,8 +40,14 @@ public class GameStarter {
             select.jump();
         } else if(KeyEventSupport.getPressed(KeyEvent.VK_RIGHT)!=0){
             select.moveForward(delta);
+            double x = select.getX();
+            if(x>500){
+                creater.moveForworld();
+            }
         }else {
             select.terminateMove();
         }
+        List<? extends MapImageAbstract> hinderMap = creater.getHinderMap();
+        select.setHinders(hinderMap);
     }
 }

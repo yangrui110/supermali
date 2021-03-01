@@ -1,14 +1,18 @@
 package com.supermali.creater;
 
+import com.supermali.entity.MapImageAbstract;
 import com.supermali.entity.map.background.BackGroundMapAbstract;
 import com.supermali.entity.map.background.FloorDown;
 import com.supermali.entity.map.background.Sky;
 import com.supermali.entity.map.hinder.Floor;
 import com.supermali.entity.map.hinder.HinderMapAbstract;
+import com.supermali.entity.map.hinder.Question;
+import com.supermali.entity.npc.NPCAbstract;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @project super-mali
@@ -23,8 +27,15 @@ public class MapCreater {
     private List<Floor> floor;
     // 水下
     private List<FloorDown> floorDowns;
+    // 问号
+    private List<Question> questions;
+
+    // 绝对地址
+    private double absoluteWidth;
+
     public MapCreater() {
         createBackground();
+        absoluteWidth = 0;
     }
 
     /**
@@ -58,6 +69,11 @@ public class MapCreater {
             }
         }
         this.floorDowns = floorDowns;
+        // 问号
+        Question question = new Question(16*16, 5*16);
+        ArrayList<Question> questions = new ArrayList<>();
+        questions.add(question);
+        this.questions = questions;
     }
 
     public void show(Graphics graphics){
@@ -70,6 +86,19 @@ public class MapCreater {
         for(HinderMapAbstract backGroundMapAbstract: floor){
             backGroundMapAbstract.make(graphics);
         }
+        for(HinderMapAbstract backGroundMapAbstract: questions){
+            backGroundMapAbstract.make(graphics);
+        }
+    }
+
+    // 移动
+    public void moveForworld(){
+        this.absoluteWidth ++;
+    }
+    public List<? extends MapImageAbstract> getHinderMap(){
+        List<MapImageAbstract> floorList = floor.stream().collect(Collectors.toList());
+        floorList.addAll(questions);
+        return floorList;
     }
 
 }

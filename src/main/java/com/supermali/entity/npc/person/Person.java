@@ -1,10 +1,13 @@
 package com.supermali.entity.npc.person;
 
+import com.supermali.entity.MapImageAbstract;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @project super-mali
@@ -40,8 +43,9 @@ public class Person extends PersonAbstract {
                 totalTime+=t;
                 double dy = 60*t - 10*t*totalTime;
                 double v2 = this.getY() + dy;
-                this.setY((int) v2);
-                if(this.getY()<32){
+                this.setY(v2);
+                boolean checkCollide = this.checkCollide(getHinders());
+                if(checkCollide){
                     this.totalTime = 0;
                     jumpOver = true;
                 }
@@ -61,12 +65,21 @@ public class Person extends PersonAbstract {
                 } else if (this.getRunningState() == RunningState.JUMP) {
                     bufferedImage = getJumpImg();
                     jumpOver = false;
+                }else if (this.getRunningState() == RunningState.DOWN) {
+                    double y = this.getY();
+                    y--;
+                    this.setY(y);
+                    bufferedImage = getTerminateImg();
                 }
             }
         }
         // 画图
         if(bufferedImage!=null) {
             this.setBufferedImage(bufferedImage);
+            boolean checkCollide = this.checkCollide(getHinders());
+            if(!checkCollide){
+                this.setRunningState(RunningState.DOWN); // 设置状态时下落
+            }
             super.make(g);
             g.drawString("用户坐标：x="+this.getX()+" y="+this.getY()+" 总时间：t="+totalTime,70,30);
         }
@@ -74,8 +87,38 @@ public class Person extends PersonAbstract {
 
 
     @Override
-    public void checkCollide() {
-
+    public boolean checkCollide(List<? extends MapImageAbstract> npcAbstractList) {
+        Shape shape = this.getShape();
+        Rectangle rectangle = (Rectangle) shape;
+        for(MapImageAbstract npcAbstract: npcAbstractList){
+            double npcAbstractX = npcAbstract.getX();
+            double npcAbstractY = npcAbstract.getY();
+            if(npcAbstract.getShape().intersects(rectangle)){
+                if(this.getY()>npcAbstractY){
+                    // 人物在其上，将人物的竖直坐标转为16的倍数
+                    double y = this.getY();
+                    for(int i=(int)y;i<Integer.MAX_VALUE;i++){
+                        if(i%16==0){
+                            y = i;
+                            break;
+                        }
+                    }
+                    this.setY(y);
+                }else {
+                    double y = this.getY();
+                    for(int i=(int)y;i>Integer.MIN_VALUE;i--){
+                        if(i%16==0){
+                            y = i;
+                            break;
+                        }
+                    }
+                    System.out.println(y);
+                    this.setY(y);
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -90,9 +133,17 @@ public class Person extends PersonAbstract {
 
     @Override
     public void moveForward(long delta) {
-        if(RunningState.JUMP==getRunningState()) return; // 跳跃状态，直接返回
+
+        // 前进
+        double x = this.getX();
+        if(x <500){
+            x+=0.1;
+            this.setX(x);
+        }
+        // 控制切换图片的帧率
         long l = delta / 60;
         if(l==0||l>rate) {
+            // 帧率
             rate = l;
             int state = getRunImgIndex();
             state++;

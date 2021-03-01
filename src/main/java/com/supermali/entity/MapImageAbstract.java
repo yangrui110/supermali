@@ -3,12 +3,10 @@ package com.supermali.entity;
 import com.supermali.util.FileUtil;
 import com.supermali.util.WorldTransform;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,9 +18,9 @@ import java.io.InputStream;
  **/
 public abstract class MapImageAbstract {
     // x坐标
-    int x;
+    double x;
     // y坐标
-    int y;
+    double y;
     // 图像数组
     byte[] image;
 
@@ -61,22 +59,6 @@ public abstract class MapImageAbstract {
     public abstract void init();
 
     /**
-     * 加载图片
-     * */
-    public void loadImg(String path){
-        try {
-            InputStream inputStream = this.getClass().getResourceAsStream(path);
-            byte[] bytes = FileUtil.readFileToByte(inputStream);
-            this.image = bytes;
-            bufferedImage = ImageIO.read(new ByteArrayInputStream(image));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * 加载路径
      * */
     public byte[] getImageBytes(String path){
@@ -97,8 +79,8 @@ public abstract class MapImageAbstract {
      * */
     public void createShape(){
         Rectangle rectangle = new Rectangle();
-        rectangle.x =this.x;
-        rectangle.y=this.y;
+        rectangle.x =(int)this.x;
+        rectangle.y=(int)this.y;
         rectangle.width = bufferedImage.getWidth();
         rectangle.height=bufferedImage.getHeight();
         this.shape = rectangle;
@@ -113,11 +95,11 @@ public abstract class MapImageAbstract {
         this.worldAffineTransform = WorldTransform.getWorldAffineTransform();
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
@@ -126,14 +108,18 @@ public abstract class MapImageAbstract {
     }
 
     public Shape getShape() {
-        return shape;
+        Rectangle rectangle = new Rectangle();
+        rectangle.setLocation((int)x,(int)y);
+        rectangle.width = bufferedImage.getWidth();
+        rectangle.height = bufferedImage.getHeight();
+        return rectangle;
     }
 
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
 
