@@ -43,7 +43,6 @@ public class LandPersonDown extends DownBehavior {
             isOver = true;
             totalTime = 0;
         }
-        System.out.println(totalTime);
         ImgHelper imgHelper = ImgLoader.getImgHelper(ImgKey.Land.TERMINATE);
         BufferedImage bufferedImage = imgHelper.select(0);
         person.setBufferedImage(bufferedImage);
