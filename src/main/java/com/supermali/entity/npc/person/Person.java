@@ -14,10 +14,12 @@ import com.supermali.creater.img.ImgHelper;
 import com.supermali.creater.img.ImgKey;
 import com.supermali.creater.img.ImgLoader;
 import com.supermali.entity.MapImageAbstract;
-import com.supermali.entity.map.hinder.Question;
 import com.supermali.entity.npc.NPCAbstract;
 
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Shape;
+import java.awt.Rectangle;
+
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
