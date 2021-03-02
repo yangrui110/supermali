@@ -25,8 +25,8 @@ public class XmlExplain {
         result=new ArrayList<>();
     }
 
-    public void explain(){
-        String path ="/map.xml/Fisrt.xml";
+    public void explain(String path){
+//        String path ="/map.xml/Fisrt.xml";
         InputStream asStream = this.getClass().getResourceAsStream(path);
         try {
             byte[] bytes = FileUtil.readFileToByte(asStream);
@@ -67,16 +67,19 @@ public class XmlExplain {
                 String y = one.attributeValue("y");
                 String cx = one.attributeValue("cx");
                 String cy = one.attributeValue("cy");
+                String order = one.attributeValue("order");
                 String shape = one.attributeValue("shape");
                 int x1 = Integer.parseInt(x);
                 int y1 = Integer.parseInt(y);
                 int cx1 = Integer.parseInt(cx==null?"1":cx);
                 int cy1 = Integer.parseInt(cy==null?"1":cy);
+                int order1 = Integer.parseInt(order == null ? "0" : order);
                 dom.setX(x1);
                 dom.setY(y1);
                 dom.setCx(cx1);
                 dom.setCy(cy1);
                 dom.setShape(shape);
+                dom.setOrder(order1);
                 dom.setEntityPath(entity);
                 list.add(dom);
             }
@@ -98,12 +101,5 @@ public class XmlExplain {
 
     public List<EntityDom> getResult() {
         return result;
-    }
-
-    public static void main(String[] args) {
-        XmlExplain explain = new XmlExplain();
-        explain.explain();
-        System.out.println(explain.getResult().size());
-        System.out.println(explain.getResult().get(0).getCx());
     }
 }

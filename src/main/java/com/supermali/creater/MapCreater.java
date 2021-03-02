@@ -3,16 +3,14 @@ package com.supermali.creater;
 import com.supermali.creater.img.ImgLoader;
 import com.supermali.entity.MapImageAbstract;
 import com.supermali.entity.map.background.BackGroundMapAbstract;
-import com.supermali.entity.map.background.FloorDown;
-import com.supermali.entity.map.background.Sky;
-import com.supermali.entity.map.hinder.Floor;
 import com.supermali.entity.map.hinder.HinderMapAbstract;
-import com.supermali.entity.map.hinder.Question;
+import com.supermali.entity.npc.monistor.MonistorAbstract;
+import com.supermali.xml.EntityDom;
+import com.supermali.xml.XmlExplain;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @project super-mali
@@ -21,15 +19,14 @@ import java.util.stream.Collectors;
  **/
 public class MapCreater {
 
-    // 蓝色天空
-    private List<Sky> blueSkys ;
-    // 地板
-    private List<Floor> floor;
-    // 水下
-    private List<FloorDown> floorDowns;
-    // 问号
-    private List<Question> questions;
-
+    // 静态阻碍物
+    private List<HinderMapAbstract> hinderMapAbstracts;
+    // 动态怪物
+    private List<MonistorAbstract> monistorAbstracts;
+    // 背景
+    private List<BackGroundMapAbstract> backGroundMapAbstracts;
+    // xml解析器
+    private XmlExplain xmlExplain;
     // 绝对地址
     private double absoluteWidth;
 
@@ -41,6 +38,10 @@ public class MapCreater {
         // 加载地图元素的图片
         imgLoader = new ImgLoader();
         imgLoader.loadMapFactor();
+        xmlExplain = new XmlExplain();
+        hinderMapAbstracts = new ArrayList<>();
+        monistorAbstracts = new ArrayList<>();
+        backGroundMapAbstracts = new ArrayList<>();
         // 图片加载完成后，初始化背景
         createBackground();
     }
@@ -49,52 +50,42 @@ public class MapCreater {
      * 创建背景 采用50*40
      * */
     public void createBackground(){
-        // 蓝色天空
-        ArrayList<Sky> list = new ArrayList<>();
-        for(int i=0;i<70;i++){
-            for(int j=0;j<40;j++){
-                Sky sky = new Sky(i*16,j*16);
-                list.add(sky);
+        xmlExplain.explain("/map.xml/Fisrt.xml");
+        List<EntityDom> result = xmlExplain.getResult();
+        for(EntityDom dom: result){
+            // 根据形状，处理
+            if(dom.getShape() == EntityDom.DrawShape.NORMAL){
+                int x = dom.getX();
+                int y = dom.getY();
+                int startx = dom.getCx()>0?0:dom.getCx();
+                int starty = dom.getCy() > 0 ? 0 : dom.getCy();
+                int endx = dom.getCx()>0?dom.getCx():0;
+                int endy = dom.getCy()>0?dom.getCy():0;
+                for(int i=startx;i<endx;i++){
+                    for(int j=starty;j<endy;j++){
+                        Object instance = dom.createInstance((x+i) * 16, (y+j) * 16);
+                        if(instance instanceof HinderMapAbstract){
+                            hinderMapAbstracts.add((HinderMapAbstract) instance);
+                        }else if(instance instanceof MonistorAbstract){
+                            monistorAbstracts.add((MonistorAbstract) instance);
+                        }else if(instance instanceof BackGroundMapAbstract){
+                            backGroundMapAbstracts.add((BackGroundMapAbstract) instance);
+                        }
+                    }
+                }
             }
         }
-        this.blueSkys = list;
-        // 地板
-        List<Floor> floorList = new ArrayList<>();
-        for(int i=0;i<70;i++ ){
-            for(int j=0;j<2;j++){
-                Floor floor = new Floor(i*16,j*16);
-                floorList.add(floor);
-            }
-        }
-        this.floor = floorList;
-        // 地下
-        ArrayList<FloorDown> floorDowns = new ArrayList<>();
-        for(int i=0;i<70;i++ ){
-            for(int j=0;j<40;j++){
-                FloorDown floorDown = new FloorDown(i*16,-j*16);
-                floorDowns.add(floorDown);
-            }
-        }
-        this.floorDowns = floorDowns;
-        // 问号
-        Question question = new Question(16*16, 3*16);
-        ArrayList<Question> questions = new ArrayList<>();
-        questions.add(question);
-        this.questions = questions;
     }
 
     public void show(Graphics graphics){
-        for(BackGroundMapAbstract backGroundMapAbstract: blueSkys){
+        for(BackGroundMapAbstract backGroundMapAbstract: backGroundMapAbstracts){
             backGroundMapAbstract.make(graphics);
         }
-        for(BackGroundMapAbstract backGroundMapAbstract: floorDowns){
+        for(HinderMapAbstract backGroundMapAbstract: hinderMapAbstracts){
             backGroundMapAbstract.make(graphics);
         }
-        for(HinderMapAbstract backGroundMapAbstract: floor){
-            backGroundMapAbstract.make(graphics);
-        }
-        for(HinderMapAbstract backGroundMapAbstract: questions){
-            backGroundMapAbstract.make(graphics);
+        for(MonistorAbstract monistorAbstract: monistorAbstracts){
+            monistorAbstract.make(graphics);
         }
     }
 
@@ -103,9 +94,7 @@ public class MapCreater {
         this.absoluteWidth ++;
     }
     public List<? extends MapImageAbstract> getHinderMap(){
-        List<MapImageAbstract> floorList = floor.stream().collect(Collectors.toList());
-        floorList.addAll(questions);
-        return floorList;
+        return hinderMapAbstracts;
     }
 
 }

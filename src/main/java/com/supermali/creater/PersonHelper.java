@@ -15,8 +15,8 @@ public class PersonHelper {
     private int type;
 
     public PersonHelper() {
-        this.first = new Person(0,32);
-        this.two = new Person(0,32);
+        this.first = new Person(0d,32d);
+        this.two = new Person(0d,32d);
         type =0;
     }
 

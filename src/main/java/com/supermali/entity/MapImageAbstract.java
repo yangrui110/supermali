@@ -31,7 +31,7 @@ public abstract class MapImageAbstract {
 
     }
 
-    public MapImageAbstract(int x, int y) {
+    public MapImageAbstract(Double x, Double y) {
         this.x = x;
         this.y = y;
         this.config();
@@ -80,6 +80,10 @@ public abstract class MapImageAbstract {
         rectangle.width = bufferedImage.getWidth();
         rectangle.height = bufferedImage.getHeight();
         return rectangle;
+    }
+
+    public void destroy(){
+
     }
 
     public void setX(double x) {

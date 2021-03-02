@@ -11,7 +11,7 @@ public abstract class HinderMapAbstract extends MapImageAbstract {
     public HinderMapAbstract() {
     }
 
-    public HinderMapAbstract(int x, int y) {
+    public HinderMapAbstract(Double x, Double y) {
         super(x, y);
     }
 }

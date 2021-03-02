@@ -16,6 +16,7 @@ import com.supermali.creater.img.ImgHelper;
 import com.supermali.creater.img.ImgKey;
 import com.supermali.creater.img.ImgLoader;
 import com.supermali.entity.MapImageAbstract;
+import com.supermali.entity.map.hinder.HinderMapAbstract;
 import com.supermali.entity.npc.NPCAbstract;
 
 import java.awt.*;
@@ -55,7 +56,7 @@ public class Person extends NPCAbstract {
         super();
     }
 
-    public Person(int x, int y) {
+    public Person(Double x, Double y) {
         super(x, y);
     }
 
@@ -73,6 +74,7 @@ public class Person extends NPCAbstract {
             double npcAbstractX = npcAbstract.getX();
             double npcAbstractY = npcAbstract.getY();
             if(npcAbstract.getShape().intersects(rectangle)){
+                // 有交集
                 if(this.getY()>npcAbstractY){
                     // 人物在其上，将人物的竖直坐标转为16的倍数
                     double y = this.getY();
@@ -83,6 +85,7 @@ public class Person extends NPCAbstract {
                         }
                     }
                     this.setY(y);
+                    return true;
                 }else {
                     double y = this.getY();
                     for(int i=(int)y;i>Integer.MIN_VALUE;i--){
@@ -93,7 +96,6 @@ public class Person extends NPCAbstract {
                     }
                     this.setY(y);
                 }
-                return true;
             }
         }
         return false;

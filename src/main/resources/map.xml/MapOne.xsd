@@ -14,12 +14,34 @@
             <xs:sequence>
                 <xs:choice minOccurs="0" maxOccurs="unbounded">
                     <xs:element ref="sky"/>
+                    <xs:element ref="floor"/>
+                    <xs:element ref="floordown"/>
                     <xs:element ref="question"/>
                 </xs:choice>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="sky">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="listfactor"/>
+                </xs:choice>
+            </xs:sequence>
+            <xs:attribute ref="entity" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="floor">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="listfactor"/>
+                </xs:choice>
+            </xs:sequence>
+            <xs:attribute ref="entity" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="floordown">
         <xs:complexType>
             <xs:sequence>
                 <xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -61,5 +83,6 @@
         <xs:attribute name="cy" type="xs:int" default="1"/>
         <xs:attribute name="shape" type="shape"/>
         <xs:attribute name="desc" type="xs:int"/>
+        <xs:attribute name="order" type="xs:int" default="0"/>
     </xs:attributeGroup>
 </xs:schema>

@@ -16,7 +16,7 @@ public class Floor extends HinderMapAbstract {
         super();
     }
 
-    public Floor(int x, int y) {
+    public Floor(Double x, Double y) {
         super(x, y);
     }
 

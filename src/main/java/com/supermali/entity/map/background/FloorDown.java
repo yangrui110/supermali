@@ -16,7 +16,7 @@ public class FloorDown extends BackGroundMapAbstract {
     public FloorDown() {
     }
 
-    public FloorDown(int x, int y) {
+    public FloorDown(Double x, Double y) {
         super(x, y);
     }
 

@@ -17,7 +17,7 @@ public class Question extends HinderMapAbstract {
         super();
     }
 
-    public Question(int x, int y) {
+    public Question(Double x, Double y) {
         super(x, y);
     }
 
@@ -26,5 +26,13 @@ public class Question extends HinderMapAbstract {
         ImgHelper imgHelper = ImgLoader.getImgHelper(ImgKey.Land.QUESTION);
         BufferedImage select = imgHelper.select(0);
         this.setBufferedImage(select);
+    }
+
+    /**
+     * 销毁方法
+     * */
+    @Override
+    public void destroy() {
+
     }
 }

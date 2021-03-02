@@ -14,7 +14,7 @@ public abstract class NPCAbstract extends MapImageAbstract {
         super();
     }
 
-    public NPCAbstract(int x, int y) {
+    public NPCAbstract(Double x, Double y) {
         super(x, y);
     }
 

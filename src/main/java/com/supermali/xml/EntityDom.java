@@ -19,6 +19,8 @@ public class EntityDom {
     private String entityPath;
     // shape 形状
     private String shape;
+    // 排序
+    private int order;
 
     public enum DrawShape{
         NORMAL("normal"),
@@ -55,7 +57,7 @@ public class EntityDom {
     public Object createInstance(double x, double y){
         try {
             Class<?> forName = Class.forName(entityPath);
-            Constructor<?> constructor = forName.getDeclaredConstructor(Double.class, Double.class);
+            Constructor<?> constructor = forName.getDeclaredConstructor(Double.class,Double.class);
             Object newInstance = constructor.newInstance(x, y);
             return newInstance;
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {

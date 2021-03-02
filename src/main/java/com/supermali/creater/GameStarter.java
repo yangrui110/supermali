@@ -43,7 +43,8 @@ public class GameStarter {
         Person select = personHelper.select();
 
         if(KeyEventSupport.getPressed(KeyEvent.VK_UP)!=0){
-            select.getJumpBehavior().jump();
+            if(select.getJumpBehavior().isOver())
+                select.getJumpBehavior().jump();
         } else if(KeyEventSupport.getPressed(KeyEvent.VK_RIGHT)!=0){
             select.getForwordBehavior().forward(delta);
             double x = select.getX();

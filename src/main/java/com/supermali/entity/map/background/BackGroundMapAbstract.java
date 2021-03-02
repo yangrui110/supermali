@@ -12,7 +12,7 @@ public abstract class BackGroundMapAbstract extends MapImageAbstract {
         super();
     }
 
-    public BackGroundMapAbstract(int x, int y) {
+    public BackGroundMapAbstract(Double x, Double y) {
         super(x, y);
     }
 }

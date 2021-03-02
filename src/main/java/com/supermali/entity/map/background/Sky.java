@@ -16,7 +16,7 @@ public class Sky extends BackGroundMapAbstract {
         super();
     }
 
-    public Sky(int x, int y) {
+    public Sky(Double x, Double y) {
         super(x,y);
     }
 
