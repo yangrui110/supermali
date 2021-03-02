@@ -1,11 +1,11 @@
 package com.supermali.behavior.terminate.land;
 
-import com.supermali.behavior.Gravity;
 import com.supermali.behavior.terminate.TerminateBehavior;
 import com.supermali.creater.img.ImgHelper;
 import com.supermali.creater.img.ImgKey;
 import com.supermali.creater.img.ImgLoader;
 import com.supermali.entity.npc.person.Person;
+import com.supermali.util.ImgConvertUtil;
 
 import java.awt.image.BufferedImage;
 
@@ -24,16 +24,12 @@ public class LandTerminate extends TerminateBehavior {
 
     @Override
     public void terminate() {
-        Enum key = ImgKey.Land.TERMINATE_RIGHT;
-        if(person.isLeft()){
-            key = ImgKey.Land.TERMINATE_LEFT;
-        }
-        ImgHelper imgHelper = ImgLoader.getImgHelper(key);
+        ImgHelper imgHelper = ImgLoader.getImgHelper(ImgKey.Land.TERMINATE);
         BufferedImage select = imgHelper.select(0);
+        if(person.isLeft()){
+            select = ImgConvertUtil.mirror(select);
+        }
         person.setBufferedImage(select);
-
-        // 默认检测是否有支撑
-        Gravity.ensureFactorInFloor(person);
 
     }
 }

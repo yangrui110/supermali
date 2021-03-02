@@ -8,6 +8,8 @@ import com.supermali.behavior.goback.GobackBehavior;
 import com.supermali.behavior.goback.land.LandPersonGoBack;
 import com.supermali.behavior.jump.JumpBehavior;
 import com.supermali.behavior.jump.land.LandPersonJump;
+import com.supermali.behavior.squatDown.SquatDownBehavior;
+import com.supermali.behavior.squatDown.land.LandPersonSquat;
 import com.supermali.behavior.terminate.TerminateBehavior;
 import com.supermali.behavior.terminate.land.LandTerminate;
 import com.supermali.creater.img.ImgHelper;
@@ -40,6 +42,8 @@ public class Person extends NPCAbstract {
     JumpBehavior jumpBehavior;
     // 静止行为
     TerminateBehavior terminateBehavior;
+    // 下蹲行为
+    SquatDownBehavior squatDownBehavior;
 
     private Direct direct;
 
@@ -111,9 +115,10 @@ public class Person extends NPCAbstract {
         jumpBehavior = new LandPersonJump(this);
         downBehavior = new LandPersonDown(this);
         terminateBehavior = new LandTerminate(this);
+        squatDownBehavior=new LandPersonSquat(this);
         this.direct = Direct.Right;
 
-        ImgHelper imgHelper = ImgLoader.getImgHelper(ImgKey.Land.TERMINATE_RIGHT);
+        ImgHelper imgHelper = ImgLoader.getImgHelper(ImgKey.Land.TERMINATE);
         BufferedImage select = imgHelper.select(0);
         this.setBufferedImage(select);
 
@@ -145,5 +150,9 @@ public class Person extends NPCAbstract {
 
     public TerminateBehavior getTerminateBehavior() {
         return terminateBehavior;
+    }
+
+    public SquatDownBehavior getSquatDownBehavior() {
+        return squatDownBehavior;
     }
 }

@@ -1,6 +1,5 @@
 package com.supermali.behavior.forward.land;
 
-import com.supermali.behavior.Gravity;
 import com.supermali.behavior.forward.MoveForwordBehavior;
 import com.supermali.creater.img.ImgHelper;
 import com.supermali.creater.img.ImgKey;
@@ -45,6 +44,5 @@ public class LandPersonMoveForword extends MoveForwordBehavior {
             BufferedImage select = imgHelper.select(index);
             person.setBufferedImage(select);
         }
-        Gravity.ensureFactorInFloor(person);
     }
 }

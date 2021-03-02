@@ -1,6 +1,5 @@
 package com.supermali.behavior.goback.land;
 
-import com.supermali.behavior.Gravity;
 import com.supermali.behavior.goback.GobackBehavior;
 import com.supermali.creater.img.ImgHelper;
 import com.supermali.creater.img.ImgKey;
@@ -44,6 +43,5 @@ public class LandPersonGoBack extends GobackBehavior {
             BufferedImage select = imgHelper.select(index);
             person.setBufferedImage(select);
         }
-        Gravity.ensureFactorInFloor(person);
     }
 }

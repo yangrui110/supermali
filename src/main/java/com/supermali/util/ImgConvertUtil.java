@@ -12,7 +12,7 @@ public class ImgConvertUtil {
     /**
      * 镜像
      */
-    public static BufferedImage mirror(BufferedImage bufImage) throws IOException {
+    public static BufferedImage mirror(BufferedImage bufImage){
 
         // 获取图片的宽高
         final int width = bufImage.getWidth();

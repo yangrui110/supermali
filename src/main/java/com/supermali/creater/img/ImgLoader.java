@@ -49,18 +49,12 @@ public class ImgLoader {
                 "/img/map/npc/person/mali/runImgIndex-2.png");
         ImgHelper forward = createImgHelper(runImgIndex);
         imgs.put(ImgKey.Land.FORWARD,forward);
-        // 静止向左
-        ImgHelper terminateRight = createImgHelper("/img/map/npc/person/mali/terminate.png");
-        imgs.put(ImgKey.Land.TERMINATE_RIGHT, terminateRight);
         // 静止向右
-        ImgHelper terminateLeft = createImgHelper("/img/map/npc/person/mali/terminate.png", true);
-        imgs.put(ImgKey.Land.TERMINATE_LEFT, terminateLeft);
-        // 左跳跃
-        ImgHelper jumpLeft = createImgHelper("/img/map/npc/person/mali/jump.png", true);
-        imgs.put(ImgKey.Land.JUMP_LEFT, jumpLeft);
+        ImgHelper terminateRight = createImgHelper("/img/map/npc/person/mali/terminate.png");
+        imgs.put(ImgKey.Land.TERMINATE, terminateRight);
         // 右跳跃
         ImgHelper jumpRight = createImgHelper("/img/map/npc/person/mali/jump.png");
-        imgs.put(ImgKey.Land.JUMP_RIGHT, jumpRight);
+        imgs.put(ImgKey.Land.JUMP, jumpRight);
         // 后退
         List<String> goubackIndex = Arrays.asList(
                 "/img/map/npc/person/mali/runImgIndex-0.png",

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapfactor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="MapOne.xsd">
+    <sky entity="com.supermali.entity.map.background.Sky">
+        <listfactor x="0" y="0"/>
+    </sky>
+    <question entity="com.supermali.entity.map.hinder.Question">
+        <listfactor x="7" y="7"/>
+        <listfactor x="14" y="14"/>
+    </question>
+</mapfactor>

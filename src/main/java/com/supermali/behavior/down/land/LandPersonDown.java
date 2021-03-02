@@ -6,6 +6,7 @@ import com.supermali.creater.img.ImgHelper;
 import com.supermali.creater.img.ImgKey;
 import com.supermali.creater.img.ImgLoader;
 import com.supermali.entity.npc.person.Person;
+import com.supermali.util.ImgConvertUtil;
 
 import java.awt.image.BufferedImage;
 
@@ -43,12 +44,11 @@ public class LandPersonDown extends DownBehavior {
             isOver = true;
             totalTime = 0;
         }
-        Enum key = ImgKey.Land.TERMINATE_RIGHT;
-        if(person.isLeft()){
-            key = ImgKey.Land.TERMINATE_LEFT;
-        }
-        ImgHelper imgHelper = ImgLoader.getImgHelper(key);
+        ImgHelper imgHelper = ImgLoader.getImgHelper(ImgKey.Land.TERMINATE);
         BufferedImage bufferedImage = imgHelper.select(0);
+        if(person.isLeft()) {
+            bufferedImage = ImgConvertUtil.mirror(bufferedImage);
+        }
         person.setBufferedImage(bufferedImage);
     }
 

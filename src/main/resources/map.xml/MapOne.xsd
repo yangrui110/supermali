@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:simpleType name="shape">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="circle"/>
+            <xs:enumeration value="rectangle"/>
+            <xs:enumeration value="stairs"/>
+            <xs:enumeration value="reverse_stairs"/>
+            <xs:enumeration value="normal"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="mapfactor">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="sky"/>
+                    <xs:element ref="question"/>
+                </xs:choice>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="sky">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="listfactor"/>
+                </xs:choice>
+            </xs:sequence>
+            <xs:attribute ref="entity" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:attribute name="entity"/>
+
+    <xs:element name="question">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="listfactor"/>
+                </xs:choice>
+            </xs:sequence>
+            <xs:attribute ref="entity" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="listfactor">
+        <xs:complexType>
+            <xs:attributeGroup ref="factor.attr"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="exclude">
+        <xs:complexType>
+            <xs:attribute name="x" type="xs:int"/>
+            <xs:attribute name="y" type="xs:int"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="factor.attr">
+        <xs:attribute name="x" type="xs:int"/>
+        <xs:attribute name="y" type="xs:int"/>
+        <xs:attribute name="cx" type="xs:int" default="1"/>
+        <xs:attribute name="cy" type="xs:int" default="1"/>
+        <xs:attribute name="shape" type="shape"/>
+        <xs:attribute name="desc" type="xs:int"/>
+    </xs:attributeGroup>
+</xs:schema>

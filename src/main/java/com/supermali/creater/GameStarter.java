@@ -1,5 +1,6 @@
 package com.supermali.creater;
 
+import com.supermali.behavior.Gravity;
 import com.supermali.entity.MapImageAbstract;
 import com.supermali.entity.npc.person.Person;
 import com.supermali.listener.KeyEventSupport;
@@ -51,9 +52,14 @@ public class GameStarter {
             }
         }else if(KeyEventSupport.getPressed(KeyEvent.VK_LEFT)!=0){
             select.getGobackBehavior().goback(delta);
+        }else if(KeyEventSupport.getPressed(KeyEvent.VK_DOWN)!=0){
+            select.getSquatDownBehavior().squat();
         }else {
             select.getTerminateBehavior().terminate();
         }
+
+        // 必须保证人物有支撑点
+        Gravity.ensureFactorInFloor(select);
         List<? extends MapImageAbstract> hinderMap = creater.getHinderMap();
         select.setHinders(hinderMap);
     }

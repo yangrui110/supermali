@@ -77,7 +77,7 @@ public class MapCreater {
         }
         this.floorDowns = floorDowns;
         // 问号
-        Question question = new Question(16*16, 5*16);
+        Question question = new Question(16*16, 3*16);
         ArrayList<Question> questions = new ArrayList<>();
         questions.add(question);
         this.questions = questions;
