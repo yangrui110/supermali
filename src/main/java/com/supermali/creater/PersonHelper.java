@@ -14,9 +14,9 @@ public class PersonHelper {
     Person two;
     private int type;
 
-    public PersonHelper() {
-        this.first = new Person(0d,32d);
-        this.two = new Person(0d,32d);
+    public PersonHelper(MapCreater mapCreater) {
+        this.first = new Person(0d,32d,mapCreater);
+        this.two = new Person(0d,32d,mapCreater);
         type =0;
     }
 

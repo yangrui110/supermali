@@ -1,5 +1,6 @@
 package com.supermali.entity.map.background;
 
+import com.supermali.creater.MapCreater;
 import com.supermali.entity.MapImageAbstract;
 
 /**
@@ -8,11 +9,9 @@ import com.supermali.entity.MapImageAbstract;
  * @Auth yangrui
  **/
 public abstract class BackGroundMapAbstract extends MapImageAbstract {
-    public BackGroundMapAbstract() {
-        super();
+
+    public BackGroundMapAbstract(Double x, Double y, MapCreater mapCreater) {
+        super(x, y, mapCreater);
     }
 
-    public BackGroundMapAbstract(Double x, Double y) {
-        super(x, y);
-    }
 }

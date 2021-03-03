@@ -62,6 +62,9 @@ public class ImgLoader {
                 "/img/map/npc/person/mali/runImgIndex-2.png");
         ImgHelper gouback = createImgHelper(goubackIndex, true);
         imgs.put(ImgKey.Land.GOBACK,gouback);
+        // 生长蘑菇
+        ImgHelper growthmushroom = createImgHelper("/img/map/npc/monistor/growthmushroom.png");
+        imgs.put(ImgKey.Land.GROWTH_MUSHROOM, growthmushroom);
     }
     /**
      * 加载monistor相关的图片

@@ -1,5 +1,6 @@
 package com.supermali.entity;
 
+import com.supermali.creater.MapCreater;
 import com.supermali.util.WorldTransform;
 
 import java.awt.*;
@@ -20,20 +21,19 @@ public abstract class MapImageAbstract {
     // 图像数组
     byte[] image;
 
+    // 地图创建器
+    private MapCreater mapCreater;
+
     private BufferedImage bufferedImage;
     // 图像对应的shape形状
     private Shape shape;
 
     private AffineTransform worldAffineTransform;
 
-    public MapImageAbstract() {
-        this.config();
-
-    }
-
-    public MapImageAbstract(Double x, Double y) {
+    public MapImageAbstract(Double x, Double y,MapCreater mapCreater) {
         this.x = x;
         this.y = y;
+        this.mapCreater=mapCreater;
         this.config();
     }
 
@@ -48,6 +48,10 @@ public abstract class MapImageAbstract {
         g.drawImage(bufferedImage,(int)transform.getX(),(int)transform.getY(),null);
 
     }
+    /**
+     * 在渲染图像之前处理数据
+     * */
+    public void proccessData(long delta){}
 
     /**
      * 子类复写的方法
@@ -74,6 +78,10 @@ public abstract class MapImageAbstract {
         return image;
     }
 
+    public MapCreater getMapCreater() {
+        return mapCreater;
+    }
+
     public Shape getShape() {
         Rectangle rectangle = new Rectangle();
         rectangle.setLocation((int)x,(int)y);
@@ -82,7 +90,7 @@ public abstract class MapImageAbstract {
         return rectangle;
     }
 
-    public void destroy(){
+    public void destroy(long delta){
 
     }
 

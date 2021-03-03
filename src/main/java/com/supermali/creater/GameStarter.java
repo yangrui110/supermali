@@ -30,10 +30,11 @@ public class GameStarter {
 
     public void init(){
         creater = new MapCreater();
-        this.personHelper = new PersonHelper();
+        this.personHelper = new PersonHelper(creater);
     }
 
-    public void show(Graphics graphics){
+    public void show(Graphics graphics, long delta){
+        creater.proccessData(delta);
         creater.show(graphics);
         Person select = personHelper.select();
         select.make(graphics);
@@ -41,6 +42,7 @@ public class GameStarter {
     // 处理键盘事件
     public void proccessKey(long delta){
         Person select = personHelper.select();
+        creater.setPerson(select); // 把人物也加入到地图元素当中
 
         if(KeyEventSupport.getPressed(KeyEvent.VK_UP)!=0){
             if(select.getJumpBehavior().isOver())
@@ -61,8 +63,6 @@ public class GameStarter {
 
         // 必须保证人物有支撑点
         Gravity.ensureFactorInFloor(select);
-        List<? extends MapImageAbstract> hinderMap = creater.getHinderMap();
-        select.setHinders(hinderMap);
     }
 
     public void setFrame(JFrame frame) {

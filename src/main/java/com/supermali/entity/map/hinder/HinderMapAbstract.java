@@ -1,5 +1,6 @@
 package com.supermali.entity.map.hinder;
 
+import com.supermali.creater.MapCreater;
 import com.supermali.entity.MapImageAbstract;
 
 /**
@@ -8,10 +9,7 @@ import com.supermali.entity.MapImageAbstract;
  * @Auth yangrui
  **/
 public abstract class HinderMapAbstract extends MapImageAbstract {
-    public HinderMapAbstract() {
-    }
-
-    public HinderMapAbstract(Double x, Double y) {
-        super(x, y);
+    public HinderMapAbstract(Double x, Double y, MapCreater mapCreater) {
+        super(x, y, mapCreater);
     }
 }

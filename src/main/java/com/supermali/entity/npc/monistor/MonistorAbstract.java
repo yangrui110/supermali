@@ -1,5 +1,6 @@
 package com.supermali.entity.npc.monistor;
 
+import com.supermali.creater.MapCreater;
 import com.supermali.entity.npc.NPCAbstract;
 
 /**
@@ -8,4 +9,7 @@ import com.supermali.entity.npc.NPCAbstract;
  * @Auth yangrui
  **/
 public abstract class MonistorAbstract extends NPCAbstract {
+    public MonistorAbstract(Double x, Double y, MapCreater mapCreater) {
+        super(x, y, mapCreater);
+    }
 }

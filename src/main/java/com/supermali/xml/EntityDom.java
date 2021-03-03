@@ -1,5 +1,7 @@
 package com.supermali.xml;
 
+import com.supermali.creater.MapCreater;
+import com.supermali.entity.MapImageAbstract;
 import lombok.Data;
 
 import java.lang.reflect.Constructor;
@@ -54,13 +56,24 @@ public class EntityDom {
         }
     }
 
-    public Object createInstance(double x, double y){
+    public Object createInstance(double x, double y, MapCreater mapCreater){
         try {
             Class<?> forName = Class.forName(entityPath);
-            Constructor<?> constructor = forName.getDeclaredConstructor(Double.class,Double.class);
-            Object newInstance = constructor.newInstance(x, y);
+            // 获取到非装饰器的类
+            Constructor<?> constructor = forName.getDeclaredConstructor(Double.class,Double.class,MapCreater.class);
+            Object newInstance = constructor.newInstance(x, y,mapCreater);
             return newInstance;
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Class getEntityPathClass(){
+        try {
+            Class<?> forName = Class.forName(entityPath);
+            return forName;
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return null;

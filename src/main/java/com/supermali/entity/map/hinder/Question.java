@@ -1,5 +1,6 @@
 package com.supermali.entity.map.hinder;
 
+import com.supermali.creater.MapCreater;
 import com.supermali.creater.img.ImgHelper;
 import com.supermali.creater.img.ImgKey;
 import com.supermali.creater.img.ImgLoader;
@@ -13,12 +14,8 @@ import java.awt.image.BufferedImage;
  **/
 public class Question extends HinderMapAbstract {
 
-    public Question() {
-        super();
-    }
-
-    public Question(Double x, Double y) {
-        super(x, y);
+    public Question(Double x, Double y, MapCreater mapCreater) {
+        super(x, y, mapCreater);
     }
 
     @Override
@@ -29,10 +26,10 @@ public class Question extends HinderMapAbstract {
     }
 
     /**
-     * 销毁方法
+     * 销毁方法，默认顶出金币特效
      * */
     @Override
-    public void destroy() {
+    public void destroy(long delta) {
 
     }
 }

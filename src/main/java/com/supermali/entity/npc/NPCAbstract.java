@@ -1,5 +1,6 @@
 package com.supermali.entity.npc;
 
+import com.supermali.creater.MapCreater;
 import com.supermali.entity.MapImageAbstract;
 
 /**
@@ -8,14 +9,8 @@ import com.supermali.entity.MapImageAbstract;
  * @Auth yangrui
  **/
 public abstract class NPCAbstract extends MapImageAbstract {
-
-
-    public NPCAbstract() {
-        super();
-    }
-
-    public NPCAbstract(Double x, Double y) {
-        super(x, y);
+    public NPCAbstract(Double x, Double y, MapCreater mapCreater) {
+        super(x, y, mapCreater);
     }
 
     /**

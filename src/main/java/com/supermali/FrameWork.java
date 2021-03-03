@@ -91,7 +91,7 @@ public class FrameWork extends JFrame implements Runnable {
         frameRate.calculate();
         gameStarter.proccessKey(frameRate.getDelta()); // 处理按键输入
         gameStarter.proccessMouse();
-        gameStarter.show(graphics);
+        gameStarter.show(graphics,frameRate.getDelta());
         frameRate.render(graphics);
     }
 }

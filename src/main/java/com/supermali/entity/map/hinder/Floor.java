@@ -1,5 +1,6 @@
 package com.supermali.entity.map.hinder;
 
+import com.supermali.creater.MapCreater;
 import com.supermali.creater.img.ImgHelper;
 import com.supermali.creater.img.ImgKey;
 import com.supermali.creater.img.ImgLoader;
@@ -12,12 +13,8 @@ import java.awt.image.BufferedImage;
  * @Auth yangrui
  **/
 public class Floor extends HinderMapAbstract {
-    public Floor() {
-        super();
-    }
-
-    public Floor(Double x, Double y) {
-        super(x, y);
+    public Floor(Double x, Double y, MapCreater mapCreater) {
+        super(x, y, mapCreater);
     }
 
     @Override

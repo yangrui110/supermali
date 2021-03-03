@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mapfactor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:noNamespaceSchemaLocation="MapOne.xsd">
-    <sky entity="com.supermali.entity.map.background.Sky">
+    <background entity="com.supermali.entity.map.background.Sky">
         <listfactor x="0" y="0" cx="70" cy="40"/>
-    </sky>
-    <floordown entity="com.supermali.entity.map.background.FloorDown">
+    </background>
+    <background entity="com.supermali.entity.map.background.FloorDown">
         <listfactor x="0" y="0" cx="70" cy="-40"/>
-    </floordown>
-    <floor entity="com.supermali.entity.map.hinder.Floor">
+    </background>
+    <hinder entity="com.supermali.entity.map.hinder.Floor">
         <listfactor x="0" y="0" cx="30" cy="2"/>
         <listfactor x="34" y="0" cx="34" cy="2"/>
-    </floor>
-    <question entity="com.supermali.entity.map.hinder.Question">
+    </hinder>
+    <hinder entity="com.supermali.entity.map.hinder.compose.QuestionGrowthMushroom">
         <listfactor x="7" y="7"/>
         <listfactor x="12" y="12"/>
-    </question>
+    </hinder>
+    <hinder entity="com.supermali.entity.map.hinder.Question">
+        <listfactor x="12" y="12"/>
+    </hinder>
 </mapfactor>

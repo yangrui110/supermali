@@ -12,11 +12,11 @@ import com.supermali.behavior.squatDown.SquatDownBehavior;
 import com.supermali.behavior.squatDown.land.LandPersonSquat;
 import com.supermali.behavior.terminate.TerminateBehavior;
 import com.supermali.behavior.terminate.land.LandTerminate;
+import com.supermali.creater.MapCreater;
 import com.supermali.creater.img.ImgHelper;
 import com.supermali.creater.img.ImgKey;
 import com.supermali.creater.img.ImgLoader;
 import com.supermali.entity.MapImageAbstract;
-import com.supermali.entity.map.hinder.HinderMapAbstract;
 import com.supermali.entity.npc.NPCAbstract;
 
 import java.awt.*;
@@ -52,12 +52,8 @@ public class Person extends NPCAbstract {
         Left,Right
     }
 
-    public Person() {
-        super();
-    }
-
-    public Person(Double x, Double y) {
-        super(x, y);
+    public Person(Double x, Double y, MapCreater mapCreater) {
+        super(x, y, mapCreater);
     }
 
     @Override
@@ -70,7 +66,8 @@ public class Person extends NPCAbstract {
     public boolean checkCollide() {
         Shape shape = this.getShape();
         Rectangle rectangle = (Rectangle) shape;
-        for(MapImageAbstract npcAbstract: getHinders()){
+        MapImageAbstract inter = null;
+        for(MapImageAbstract npcAbstract: getMapCreater().getHinderMapAbstracts()){
             double npcAbstractX = npcAbstract.getX();
             double npcAbstractY = npcAbstract.getY();
             if(npcAbstract.getShape().intersects(rectangle)){
@@ -91,12 +88,16 @@ public class Person extends NPCAbstract {
                     for(int i=(int)y;i>Integer.MIN_VALUE;i--){
                         if(i%16==0){
                             y = i;
+                            inter = npcAbstract;
                             break;
                         }
                     }
                     this.setY(y);
                 }
             }
+        }
+        if(inter!=null){
+            inter.destroy(0);
         }
         return false;
     }
@@ -124,14 +125,6 @@ public class Person extends NPCAbstract {
         BufferedImage select = imgHelper.select(0);
         this.setBufferedImage(select);
 
-    }
-
-    public List<? extends MapImageAbstract> getHinders() {
-        return hinders;
-    }
-
-    public void setHinders(List<? extends MapImageAbstract> hinders) {
-        this.hinders = hinders;
     }
 
     public MoveForwordBehavior getForwordBehavior() {

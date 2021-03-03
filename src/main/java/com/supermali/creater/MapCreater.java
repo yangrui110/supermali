@@ -1,10 +1,10 @@
 package com.supermali.creater;
 
 import com.supermali.creater.img.ImgLoader;
-import com.supermali.entity.MapImageAbstract;
 import com.supermali.entity.map.background.BackGroundMapAbstract;
 import com.supermali.entity.map.hinder.HinderMapAbstract;
 import com.supermali.entity.npc.monistor.MonistorAbstract;
+import com.supermali.entity.npc.person.Person;
 import com.supermali.xml.EntityDom;
 import com.supermali.xml.XmlExplain;
 
@@ -29,6 +29,8 @@ public class MapCreater {
     private XmlExplain xmlExplain;
     // 绝对地址
     private double absoluteWidth;
+    // 人物元素
+    private Person person;
 
     ImgLoader imgLoader;
 
@@ -63,7 +65,7 @@ public class MapCreater {
                 int endy = dom.getCy()>0?dom.getCy():0;
                 for(int i=startx;i<endx;i++){
                     for(int j=starty;j<endy;j++){
-                        Object instance = dom.createInstance((x+i) * 16, (y+j) * 16);
+                        Object instance = dom.createInstance((x+i) * 16, (y+j) * 16,this);
                         if(instance instanceof HinderMapAbstract){
                             hinderMapAbstracts.add((HinderMapAbstract) instance);
                         }else if(instance instanceof MonistorAbstract){
@@ -89,12 +91,36 @@ public class MapCreater {
         }
     }
 
+    public void proccessData(long delta){
+        for(BackGroundMapAbstract backGroundMapAbstract: backGroundMapAbstracts){
+            backGroundMapAbstract.proccessData(delta);
+        }
+        for(HinderMapAbstract backGroundMapAbstract: hinderMapAbstracts){
+            backGroundMapAbstract.proccessData(delta);
+        }
+        for(MonistorAbstract monistorAbstract: monistorAbstracts){
+            monistorAbstract.proccessData(delta);
+        }
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
     // 移动
     public void moveForworld(){
         this.absoluteWidth ++;
     }
-    public List<? extends MapImageAbstract> getHinderMap(){
+
+    public List<HinderMapAbstract> getHinderMapAbstracts() {
         return hinderMapAbstracts;
     }
 
+    public List<MonistorAbstract> getMonistorAbstracts() {
+        return monistorAbstracts;
+    }
+
+    public List<BackGroundMapAbstract> getBackGroundMapAbstracts() {
+        return backGroundMapAbstracts;
+    }
 }
